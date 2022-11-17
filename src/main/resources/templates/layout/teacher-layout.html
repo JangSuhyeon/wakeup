@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<!-- ¼±»ý´Ô °øÅë head -->
+    <th:block th:replace="/layout/fragments/teacher-head :: teacher-head"></th:block>
+    
+<body>
+    <!-- ¼±»ý´Ô °øÅë header -->
+    <th:block th:replace="/layout/fragments/teacher-header :: teacher-header"></th:block>
+    
+    <!-- ¼±»ý´Ô °øÅë sidebar -->
+    <th:block th:replace="/layout/fragments/teacher-nav :: teacher-nav"></th:block>
+    
+    <!-- ¼±»ý´Ô content -->
+    <th:block layout:fragment="content"></th:block>
+    
+    <!-- ¼±»ý´Ô °øÅë footer -->
+    <th:block th:replace="/layout/fragments/teacher-footer :: teacher-footer"></th:block>
+    
+    <!-- ¼±»ý´Ô °øÅë script -->
+    <th:block th:replace="/layout/fragments/teacher-script :: teacher-script"></th:block>
+</body>
+</html>
