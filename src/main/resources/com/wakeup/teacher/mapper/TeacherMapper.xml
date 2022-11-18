@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wakeup.teacher.mapper.TeacherMapper">
+
+	<!-- 오늘 신규회원 count -->
+	<select id="countMemberToday" resultType="hashmap">
+		SELECT
+			count(ts.std_cd) AS count,
+			ifnull(round(((count(ts.std_cd) - A.count) / A.count) * 100,0),0) AS rate
+		FROM
+			tb_student ts,
+			(
+				SELECT
+					count(1) AS count
+				FROM 
+					tb_student ts2 
+				WHERE 
+					reg_dt = CURDATE() - INTERVAL 1 DAY
+			) A
+		WHERE
+			reg_dt = CURDATE()
+	</select>
+	
+	<!-- 오늘 신규수강 count -->
+	<select id="countLectureToday" resultType="hashmap">
+		SELECT
+			count(tcol.class_ogn_let_cd) AS count,
+			ifnull(round(((count(tcol.class_ogn_let_cd)-A.count) / A.count) * 100,0),0) AS rate
+		FROM
+			tb_class_organize_lecture tcol ,
+			(
+				SELECT
+					count(1) AS count
+				FROM 
+					tb_class_organize_lecture tcol2 
+				WHERE 
+					date_format(reg_dt,'%Y-%m-%d') = CURDATE() - INTERVAL 1 DAY
+			) A
+		WHERE
+			date_format(reg_dt,'%Y-%m-%d') = CURDATE()
+	</select>
+	
+	<!-- 오늘 총 매출 -->
+	<select id="selectTotalAmtToday" resultType="int">
+		SELECT
+			ifnull(sum(tot_amt),0) AS totAmt
+		FROM
+			tb_sales_mst tsm
+		WHERE 
+			sales_dt = CURDATE()
+	</select>
+
+</mapper>
