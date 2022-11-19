@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.wakeup.teacher.domain.BoardVO;
 import com.wakeup.teacher.domain.SearchBoardDTO;
+import com.wakeup.teacher.domain.StudentVO;
 
 @Mapper
 public interface TeacherMapper {
@@ -17,6 +18,8 @@ public interface TeacherMapper {
 
 	int selectTotalAmtToday();
 
-	List<BoardVO> selectBoard(SearchBoardDTO boardCd);
+	List<BoardVO> selectBoardList(SearchBoardDTO boardCd);
+
+	List<StudentVO> selectDashStudentList();
 
 }

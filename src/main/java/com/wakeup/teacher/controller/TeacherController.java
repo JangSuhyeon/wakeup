@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.wakeup.teacher.domain.SearchBoardDTO;
+import com.wakeup.teacher.domain.StudentVO;
 import com.wakeup.teacher.domain.BoardVO;
 import com.wakeup.teacher.service.TeacherService;
 
@@ -25,6 +26,7 @@ public class TeacherController {
 		HashMap<String, String> memberCnt = new HashMap<String, String>();
 		HashMap<String, String> lectureCnt = new HashMap<String, String>();
 		List<BoardVO> noticeList = new ArrayList<>();
+		List<StudentVO> studentList = new ArrayList<>();
 		int totalAmt = 0;
 		
 		// 오늘 신규회원 count
@@ -38,12 +40,16 @@ public class TeacherController {
 		SearchBoardDTO searchBoard = new SearchBoardDTO();
 		searchBoard.setBoardCd(1);
 		searchBoard.setStartLimit(6);
-		noticeList = teacherService.selectBoard(searchBoard);
+		noticeList = teacherService.selectBoardList(searchBoard);
+		
+		// 신규회원
+		studentList = teacherService.selectDashStudentList();
 		
 		model.addAttribute("memberCnt",memberCnt);
 		model.addAttribute("lectureCnt",lectureCnt);
 		model.addAttribute("totalAmt",totalAmt);
 		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("studentList", studentList);
 		
 		return "teacher/dashboard";
 	}

@@ -52,7 +52,7 @@
 	</select>
 	
 	<!-- 게시판 -->
-	<select id="selectBoard" parameterType="com.wakeup.teacher.domain.SearchBoardDTO" resultType="com.wakeup.teacher.domain.BoardVO">
+	<select id="selectBoardList" parameterType="com.wakeup.teacher.domain.SearchBoardDTO" resultType="com.wakeup.teacher.domain.BoardVO">
 		select 
 			board_cd, 
 			board_info_cd, 
@@ -66,6 +66,32 @@
 			board_info_cd = #{boardCd} 
 		order by reg_dt DESC 
 		limit #{startLimit}
+	</select>
+	
+	<!-- 대시보드 신규회원 -->
+	<select id="selectDashStudentList" resultType="com.wakeup.teacher.domain.StudentVO">
+		select @rownum:=@rownum+1 AS NO, T.* from (
+			select 
+				ts.std_nm,
+				tco.class_nm,
+				concat(left(tco.class_ym,4),'년 ',right(tco.class_ym,2),'월') AS class_ym,
+				date_format(ts.reg_dt,'%Y년 %m월 %d일') AS reg_dt 
+			from
+				tb_student ts
+				left join (
+					select * from (
+						select 
+							tcol.std_cd,
+							tcol.class_ogn_cd,
+							RANK() OVER(PARTITION BY tcol.std_cd ORDER BY reg_dt DESC)
+						from
+							tb_class_organize_lecture tcol) B
+					group by B.std_cd
+				) A on ts.std_cd = A.std_cd
+				left join tb_class_organize tco on A.class_ogn_cd = tco.class_ogn_cd
+			order by ts.reg_dt DESC) T
+		, (SELECT @rownum:=0) TMP
+		limit 5
 	</select>
 
 </mapper>
