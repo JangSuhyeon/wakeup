@@ -50,5 +50,22 @@
 		WHERE 
 			sales_dt = CURDATE()
 	</select>
+	
+	<!-- 게시판 -->
+	<select id="selectBoard" parameterType="com.wakeup.teacher.domain.SearchBoardDTO" resultType="com.wakeup.teacher.domain.BoardVO">
+		select 
+			board_cd, 
+			board_info_cd, 
+			title, 
+			content, 
+			emp_seq, 
+			reg_dt 
+		from 
+			tb_board 
+		where 
+			board_info_cd = #{boardCd} 
+		order by reg_dt DESC 
+		limit #{startLimit}
+	</select>
 
 </mapper>
