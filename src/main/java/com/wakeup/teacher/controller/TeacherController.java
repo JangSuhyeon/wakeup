@@ -21,7 +21,7 @@ public class TeacherController {
 	private TeacherService teacherService;
 	
 	// 대시보드 화면
-	@GetMapping("/teacher")
+	@GetMapping("/dashboard")
 	public String goToDashboard(Model model) {
 		HashMap<String, String> memberCnt = new HashMap<String, String>();
 		HashMap<String, String> lectureCnt = new HashMap<String, String>();

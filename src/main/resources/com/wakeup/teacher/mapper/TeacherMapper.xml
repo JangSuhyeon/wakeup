@@ -73,8 +73,8 @@
 		select @rownum:=@rownum+1 AS NO, T.* from (
 			select 
 				ts.std_nm,
-				tco.class_nm,
-				concat(left(tco.class_ym,4),'년 ',right(tco.class_ym,2),'월') AS class_ym,
+				tco.class_ogn_nm,
+				concat(left(tco.class_ogn_ym,4),'년 ',right(tco.class_ogn_ym,2),'월') AS class_ogn_ym,
 				date_format(ts.reg_dt,'%Y년 %m월 %d일') AS reg_dt 
 			from
 				tb_student ts

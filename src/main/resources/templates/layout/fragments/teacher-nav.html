@@ -1,20 +1,22 @@
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
-	<!--navFragment ����-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+	<!--navFragment 선언-->
 	<div th:fragment="teacher-nav">
 		<aside id="sidebar" class="sidebar">
 
 		    <ul class="sidebar-nav" id="sidebar-nav">
 		
 		      <li class="nav-item">
-		        <a class="nav-link " href="index.html">
+		        <a class="nav-link " href="/dashboard">
 		          <i class="bi bi-grid"></i>
-		          <span>Dashboard</span>
+		          <span>대시보드</span>
 		        </a>
 		      </li><!-- End Dashboard Nav -->
 		
 		      <li class="nav-item">
-		        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-		          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+		        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="/student">
+		          <i class="bi bi-layout-text-window-reverse"></i><span>학생목록</span><i class="bi bi-chevron-down ms-auto"></i>
 		        </a>
 		        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 		          <li>
