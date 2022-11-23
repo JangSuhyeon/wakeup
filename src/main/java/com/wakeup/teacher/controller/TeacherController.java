@@ -27,6 +27,7 @@ public class TeacherController {
 		HashMap<String, String> lectureCnt = new HashMap<String, String>();
 		List<BoardVO> noticeList = new ArrayList<>();
 		List<StudentVO> studentList = new ArrayList<>();
+		List<BoardVO> newsList = new ArrayList<>();
 		int totalAmt = 0;
 		
 		// 오늘 신규회원 count
@@ -37,19 +38,26 @@ public class TeacherController {
 		totalAmt = teacherService.selectTotalAmtToday();
 		
 		// 공지사항
-		SearchBoardDTO searchBoard = new SearchBoardDTO();
-		searchBoard.setBoardCd(1);
-		searchBoard.setStartLimit(6);
-		noticeList = teacherService.selectBoardList(searchBoard);
+		SearchBoardDTO searchBoard1 = new SearchBoardDTO();
+		searchBoard1.setBoardCd(1);
+		searchBoard1.setStartLimit(6);
+		noticeList = teacherService.selectBoardList(searchBoard1);
 		
 		// 신규회원
 		studentList = teacherService.selectDashStudentList();
+		
+		// 학원소식
+		SearchBoardDTO searchBoard2 = new SearchBoardDTO();
+		searchBoard2.setBoardCd(2);
+		searchBoard2.setStartLimit(3);
+		newsList = teacherService.selectBoardList(searchBoard2);
 		
 		model.addAttribute("memberCnt",memberCnt);
 		model.addAttribute("lectureCnt",lectureCnt);
 		model.addAttribute("totalAmt",totalAmt);
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("studentList", studentList);
+		model.addAttribute("newsList", newsList);
 		
 		return "teacher/dashboard";
 	}
