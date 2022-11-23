@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wakeup.teacher.domain.BoardVO;
 import com.wakeup.teacher.domain.SearchBoardDTO;
+import com.wakeup.teacher.domain.SearchStudentDTO;
 import com.wakeup.teacher.domain.StudentVO;
 import com.wakeup.teacher.mapper.TeacherMapper;
 
@@ -33,8 +34,8 @@ public class TeacherService {
 		return teacherMapper.selectBoardList(searchBoard);
 	}
 
-	public List<StudentVO> selectDashStudentList() {
-		return teacherMapper.selectDashStudentList();
+	public List<StudentVO> selectDashStudentList(SearchStudentDTO searchStudent) {
+		return teacherMapper.selectDashStudentList(searchStudent);
 	}
 
 }

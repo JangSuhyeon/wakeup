@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wakeup.teacher.student.mapper.StudnetMapper">
+	<!-- 학생목록 -->
+	<select id="selectDashStudentList" parameterType="com.wakeup.teacher.domain.SearchStudentDTO" resultType="com.wakeup.teacher.domain.StudentVO">
+		select @rownum:=@rownum+1 AS NO, T.* from (
+			select 
+				ts.std_nm,
+				ts.sch_cls_sn,
+				ts.sch_nm,
+				ts.sch_aca_sn,
+				tco.class_ogn_nm,
+				concat(left(tco.class_ogn_ym,4),'년 ',right(tco.class_ogn_ym,2),'월') AS class_ogn_ym,
+				date_format(ts.reg_dt,'%Y년 %m월 %d일') AS reg_dt 
+			from
+				tb_student ts
+				left join (
+					select * from (
+						select 
+							tcol.std_cd,
+							tcol.class_ogn_cd,
+							RANK() OVER(PARTITION BY tcol.std_cd ORDER BY reg_dt DESC)
+						from
+							tb_class_organize_lecture tcol) B
+					group by B.std_cd
+				) A on ts.std_cd = A.std_cd
+				left join tb_class_organize tco on A.class_ogn_cd = tco.class_ogn_cd
+			order by ts.reg_dt DESC) T
+		, (SELECT @rownum:=0) TMP
+		limit #{limit}
+	</select>
+</mapper>

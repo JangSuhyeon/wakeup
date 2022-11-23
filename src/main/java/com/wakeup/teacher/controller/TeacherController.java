@@ -10,15 +10,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.wakeup.teacher.domain.SearchBoardDTO;
+import com.wakeup.teacher.domain.SearchStudentDTO;
 import com.wakeup.teacher.domain.StudentVO;
 import com.wakeup.teacher.domain.BoardVO;
 import com.wakeup.teacher.service.TeacherService;
+import com.wakeup.teacher.student.service.StudentService;
 
 @Controller
 public class TeacherController {
 	
 	@Autowired
 	private TeacherService teacherService;
+	
+	@Autowired
+	private StudentService studentService;
 	
 	// 대시보드 화면
 	@GetMapping("/dashboard")
@@ -40,16 +45,18 @@ public class TeacherController {
 		// 공지사항
 		SearchBoardDTO searchBoard1 = new SearchBoardDTO();
 		searchBoard1.setBoardCd(1);
-		searchBoard1.setStartLimit(6);
+		searchBoard1.setLimit(6);
 		noticeList = teacherService.selectBoardList(searchBoard1);
 		
 		// 신규회원
-		studentList = teacherService.selectDashStudentList();
+		SearchStudentDTO searchStudent = new SearchStudentDTO();
+		searchStudent.setLimit(5);
+		studentList = studentService.selectDashStudentList(searchStudent);
 		
 		// 학원소식
 		SearchBoardDTO searchBoard2 = new SearchBoardDTO();
 		searchBoard2.setBoardCd(2);
-		searchBoard2.setStartLimit(3);
+		searchBoard2.setLimit(3);
 		newsList = teacherService.selectBoardList(searchBoard2);
 		
 		model.addAttribute("memberCnt",memberCnt);
