@@ -1,7 +1,9 @@
 package com.wakeup.user.controller;
 
+import com.wakeup.user.domain.UserLoginRequest;
 import com.wakeup.user.domain.dto.UserJoinRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,12 @@ public class UserController {
     public ResponseEntity<String> join(@RequestBody UserJoinRequest dto){
         userService.join(dto.getUserName(),dto.getPassword());
         return ResponseEntity.ok().body("회원가입 성공");
+    }
+    
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginRequest dto){
+        String token = userService.login(dto.getUserName(), dto.getPassword());
+        return ResponseEntity.ok().body(token);
     }
 
 }
