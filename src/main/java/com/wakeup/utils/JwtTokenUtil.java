@@ -20,4 +20,9 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+    public static boolean isExpired(String token, String secretKey) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+                .getBody().getExpiration().before(new Date());
+    }
+
 }

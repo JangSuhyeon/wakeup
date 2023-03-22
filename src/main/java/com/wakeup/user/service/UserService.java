@@ -1,4 +1,4 @@
-package com.wakeup.user.controller;
+package com.wakeup.user.service;
 
 import com.wakeup.exception.AppException;
 import com.wakeup.exception.ErrorCode;

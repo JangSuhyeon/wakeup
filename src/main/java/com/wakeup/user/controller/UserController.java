@@ -2,8 +2,8 @@ package com.wakeup.user.controller;
 
 import com.wakeup.user.domain.UserLoginRequest;
 import com.wakeup.user.domain.dto.UserJoinRequest;
+import com.wakeup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
