@@ -3,9 +3,11 @@ package com.wakeup.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
+@Slf4j
 public class JwtTokenUtil {
 
     public static String createToken(String userName, String key, long expireTimeMs) {
@@ -23,6 +25,11 @@ public class JwtTokenUtil {
     public static boolean isExpired(String token, String secretKey) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
+    }
+
+    public static String getUserName(String token, String secretKey){
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+                .getBody().get("userName",String.class);
     }
 
 }

@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Token 유효성 검사
         log.info("AUTHORIZATION : {}", authentication);
-        if (authentication == null || !authentication.startsWith("Bearer")){
+        if (authentication == null || !authentication.startsWith("Bearer ")){
             log.error("AUTHORIZATION을 잘못 보냈습니다.");
             filterChain.doFilter(request, response);
             return;
@@ -43,13 +43,15 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = authentication.split(" ")[1];
 
         // Token Expried 여부
-        if(JwtTokenUtil.isExpired(secretKey, token)){
+        if(JwtTokenUtil.isExpired(token, secretKey)){
             log.error("Token이 만료 되었습니다.");
             filterChain.doFilter(request, response);
             return;
         };
 
-        String userName = "";
+        // UserName Token에서 꺼내기
+        String userName = JwtTokenUtil.getUserName(token,secretKey);
+        log.info("usreName : {}",userName);
 
         // 권한부여
         UsernamePasswordAuthenticationToken authenticationToken =
