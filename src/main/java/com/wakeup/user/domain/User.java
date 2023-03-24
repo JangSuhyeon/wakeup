@@ -1,9 +1,6 @@
 package com.wakeup.user.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +16,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String userName;
+
+    @Column
     private String password;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    // 회원정보 수정
+    public void modify(String password, String name) {
+        this.password = password;
+        this.name = name;
+    }
+
+    public String getRoleValue() {
+        return this.role.getValue();
+    }
+
+    //
 }

@@ -1,5 +1,6 @@
 package com.wakeup.configuration;
 
+import com.wakeup.user.service.CustomOAuth2UserService;
 import com.wakeup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,8 @@ public class SecurityConfig {
     @Value("${jwt.token.secret}")
     private String secretKey;
 
+    private final CustomOAuth2UserService customOAuth2UserService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -31,6 +34,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/user/join","/user/login").permitAll()
                 .requestMatchers(HttpMethod.POST,"/student/**").authenticated()
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
