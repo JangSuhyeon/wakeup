@@ -1,5 +1,6 @@
 package com.wakeup.user.service;
 
+import com.wakeup.user.domain.OAuthAttributes;
 import com.wakeup.user.domain.User;
 import com.wakeup.user.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -34,11 +35,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName);
+        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
 
-        session.setAttribute("user", new UserSessionDto(user));
+//        session.setAttribute("user", new UserSessionDto(user));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleValue())),
@@ -47,5 +48,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     // 소셜로그인시 기존 회원이 존재하면 수정날짜 정보만 업데이트해 기존의 데이터는 그대로 보존
+    private User saveOrUpdate(OAuthAttributes attributes) {
+        User user = userRepository.findByUserName(attributes.getEmail())
+                .map(User::updateModifiedDate)
+                .orElse(attributes.toEntity());
+
+        return userRepository.save(user);
+    }
 
 }

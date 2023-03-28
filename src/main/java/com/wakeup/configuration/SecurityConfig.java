@@ -27,23 +27,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .httpBasic().disable()
-                .csrf().disable()
-                .cors().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/user/join","/user/login").permitAll()
-                .requestMatchers(HttpMethod.POST,"/student/**").authenticated()
-                .and()
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
-                .build();
+        httpSecurity
+            .httpBasic().disable()
+            .csrf().disable()
+            .cors().disable()
+            .authorizeHttpRequests()
+            .requestMatchers("/user/join","/user/login").permitAll()
+            .requestMatchers(HttpMethod.POST,"/student/**").authenticated()
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .oauth2Login()
+            .userInfoEndpoint()
+            .userService(customOAuth2UserService);
+
+        return httpSecurity.addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+            .build();
     }
 
 }

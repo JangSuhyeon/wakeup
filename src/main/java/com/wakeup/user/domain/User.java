@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class User {
+public class User extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,9 @@ public class User {
 
     @Column
     private String password;
+
+    @Column
+    private String email;
 
     @Column(nullable = false)
     private String name;
@@ -35,9 +38,14 @@ public class User {
         this.name = name;
     }
 
+    // 소셜로그인시 수정날짜 업데이트 (필요?)
+    public User updateModifiedDate() {
+        this.onPreUpdate();
+        return this;
+    }
+
     public String getRoleValue() {
         return this.role.getValue();
     }
 
-    //
 }
