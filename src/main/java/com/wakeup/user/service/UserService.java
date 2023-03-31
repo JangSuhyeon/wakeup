@@ -3,6 +3,7 @@ package com.wakeup.user.service;
 import com.wakeup.exception.AppException;
 import com.wakeup.exception.ErrorCode;
 import com.wakeup.user.domain.User;
+import com.wakeup.user.domain.dto.UserJoinResponse;
 import com.wakeup.user.repository.UserRepository;
 import com.wakeup.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class UserService {
     private String key;
     private long expireTimeMs = 1000 * 60 * 60l;
 
-    public String join(String userName, String password){
+    public UserJoinResponse join(String userName, String password, String name, String email){
 
         // id중복확인
         userRepository.findByUserName(userName)
@@ -34,10 +37,16 @@ public class UserService {
         User user = User.builder()
                 .userName(userName)
                 .password(encoder.encode(password))
+                .name(name)
+                .email(email)
                 .build();
-        userRepository.save(user);
+        String joinedUserName = userRepository.save(user).getUserName();
 
-        return "성공";
+        return UserJoinResponse.builder()
+                .userName(userName)
+                .name(name)
+                .email(email)
+                .build();
     }
 
     public String login(String userName, String password) {

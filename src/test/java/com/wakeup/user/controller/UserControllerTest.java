@@ -55,7 +55,7 @@ class UserControllerTest {
         String userName = "jang";
         String password = "1234";
 
-        when(userService.join(any(),any()))
+        when(userService.join(any(),any(),any(),any()))
                         .thenThrow(new RuntimeException("해당 userId가 중복됩니다."));
 
         mockMvc.perform(post("/user/join")
