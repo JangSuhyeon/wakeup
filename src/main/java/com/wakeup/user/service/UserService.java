@@ -2,6 +2,7 @@ package com.wakeup.user.service;
 
 import com.wakeup.exception.AppException;
 import com.wakeup.exception.ErrorCode;
+import com.wakeup.user.domain.Role;
 import com.wakeup.user.domain.User;
 import com.wakeup.user.domain.dto.UserJoinResponse;
 import com.wakeup.user.repository.UserRepository;
@@ -30,7 +31,7 @@ public class UserService {
         // id중복확인
         userRepository.findByUserName(userName)
                 .ifPresent(user -> {
-                    throw new AppException(ErrorCode.USERNAME_DUPLICATED,userName + "는 이미 있습니다.");
+                    throw new AppException(ErrorCode.USERNAME_DUPLICATED,"이미 가입된 아이디입니다.");
                 });
 
         // 저장
@@ -39,8 +40,10 @@ public class UserService {
                 .password(encoder.encode(password))
                 .name(name)
                 .email(email)
+                .role(Role.USER)
                 .build();
-        String joinedUserName = userRepository.save(user).getUserName();
+
+        userRepository.save(user);
 
         return UserJoinResponse.builder()
                 .userName(userName)
@@ -62,6 +65,7 @@ public class UserService {
 
         // 로그인 성공
         String token = JwtTokenUtil.createToken(userName, key, expireTimeMs);
+        System.out.println("token : " + token);
 
         return token;
     }

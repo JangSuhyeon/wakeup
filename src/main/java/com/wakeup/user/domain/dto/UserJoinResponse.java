@@ -1,5 +1,7 @@
 package com.wakeup.user.domain.dto;
 
+import com.wakeup.user.domain.Role;
+import com.wakeup.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

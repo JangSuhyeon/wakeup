@@ -8,6 +8,7 @@ import com.wakeup.user.service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +28,15 @@ public class UserController {
         return "/user/login";
     }
 
+    @ResponseBody
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginRequest dto){
+        System.out.println();
+        System.out.println("dto : " + dto);
         String token = userService.login(dto.getUserName(), dto.getPassword());
+
+        log.info("userName : {} -> 로그인",dto.getUserName());
+
         return ResponseEntity.ok().body(token);
     }
 
@@ -38,10 +45,19 @@ public class UserController {
         return "/user/join";
     }
 
+    @ResponseBody
     @PostMapping("/join")
-    public String join(@RequestBody UserJoinRequest dto, Model model){
+    public ResponseEntity<String> join(@RequestBody UserJoinRequest dto, Model model){
         UserJoinResponse user = userService.join(dto.getUserName(),dto.getPassword(),dto.getName(),dto.getEmail());
         model.addAttribute("user",user);
+
+        log.info("userName : {} -> 회원가입",user.getUserName());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/join/complete")
+    public String goToJoinComplete() {
         return "/user/joinComplete";
     }
 

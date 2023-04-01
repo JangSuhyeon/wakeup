@@ -33,8 +33,9 @@ public class SecurityConfig {
                 .cors().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/assets/**").permitAll()
-                .requestMatchers("/user/join").permitAll()
-                .requestMatchers("/student/**").authenticated()
+                .requestMatchers("/user/join/**").permitAll()
+                .requestMatchers("/user/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

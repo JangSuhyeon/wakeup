@@ -32,7 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
         final String authentication = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         // Token 유효성 검사
-        log.info("AUTHORIZATION : {}", authentication);
+//        log.info("AUTHORIZATION : {}", authentication);
         if (authentication == null || !authentication.startsWith("Bearer ")){
             log.error("AUTHORIZATION을 잘못 보냈습니다.");
             filterChain.doFilter(request, response);
