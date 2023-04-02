@@ -126,13 +126,19 @@
                 data: JSON.stringify(data),
                 success: function (data, textStatus, request) {
                     var token = request.getResponseHeader('AUTHORIZATION');
-                    $.ajaxSetup({
-                        headers: {
-                            'AUTHORIZATION' : token
+                    $.ajax({
+                        type: "GET",
+                        url: "/main",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("AUTHORIZATION", token);
+                        },
+                        success: function(response) {
+                            window.location.assign("/main");
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log("Error: " + textStatus + " " + errorThrown);
                         }
                     });
-                    console.log(token);
-                    window.location.assign("/main");
                 },
                 error: function (data) {
                     console.log(data);
