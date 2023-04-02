@@ -56,11 +56,11 @@ public class UserService {
 
         // 아이디 없음
         User selectedUser = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, userName + "이 없습니다."));
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, "등록되지 않은 ID입니다."));
 
         // 비밀번호 틀림
         if(!encoder.matches(password, selectedUser.getPassword())){
-            throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드가 틀렸습니다.");
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
         // 로그인 성공

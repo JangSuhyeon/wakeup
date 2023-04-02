@@ -8,12 +8,12 @@ import com.wakeup.user.service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
@@ -29,15 +29,14 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/login")
+    @PostMapping("/loginFinish")
     public ResponseEntity<String> login(@RequestBody UserLoginRequest dto){
-        System.out.println();
-        System.out.println("dto : " + dto);
         String token = userService.login(dto.getUserName(), dto.getPassword());
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("AUTHORIZATION", "Bearer " + token);
         log.info("userName : {} -> 로그인",dto.getUserName());
 
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().headers(headers).body(token);
     }
 
     @GetMapping("/join")

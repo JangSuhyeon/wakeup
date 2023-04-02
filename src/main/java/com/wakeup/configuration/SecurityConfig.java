@@ -34,22 +34,24 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("/user/join/**").permitAll()
-                .requestMatchers("/user/login").permitAll()
+                .requestMatchers("/user/loginFinish").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity
-                .formLogin().loginPage("/user/login").permitAll();
+                .formLogin()
+                .loginPage("/user/login")
+                .permitAll();
 
-        httpSecurity
+        /*httpSecurity
                 .oauth2Login()
                 .authorizationEndpoint()
                 .baseUri("/oauth2/login")
                 .and()
                 .userInfoEndpoint()
-                .userService(customOAuth2UserService);
+                .userService(customOAuth2UserService);*/
 
         return httpSecurity.addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
             .build();
