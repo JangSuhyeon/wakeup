@@ -54,6 +54,9 @@ public class JwtFilter extends OncePerRequestFilter {
         String userName = JwtTokenUtil.getUserName(token,secretKey);
         log.info("usreName : {}",userName);
 
+        //
+        response.addHeader("AUTHORIZATION", "Bearer " + token);
+
         // 권한부여
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("USER")));
