@@ -4,6 +4,7 @@ import com.wakeup.user.service.UserService;
 import com.wakeup.utils.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,11 +32,19 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println(request);
-        final String authentication = request.getHeader(HttpHeaders.AUTHORIZATION);
+        Cookie[] cookies = request.getCookies();
+        String cookieToken = "";
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    cookieToken = cookie.getValue();
+                    cookieToken = UriUtils.decode(cookieToken, StandardCharsets.UTF_8);
+                }
+            }
+        }
+        final String authentication = cookieToken;
 
         // Token 유효성 검사
-        log.info("AUTHORIZATION : {}", authentication);
         if (authentication == null || !authentication.startsWith("Bearer ")){
             log.error("AUTHORIZATION을 잘못 보냈습니다.");
             filterChain.doFilter(request, response);
@@ -52,10 +63,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // UserName Token에서 꺼내기
         String userName = JwtTokenUtil.getUserName(token,secretKey);
-        log.info("usreName : {}",userName);
-
-        //
-        response.addHeader("AUTHORIZATION", "Bearer " + token);
 
         // 권한부여
         UsernamePasswordAuthenticationToken authenticationToken =

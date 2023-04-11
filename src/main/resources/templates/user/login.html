@@ -125,45 +125,9 @@
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (data, textStatus, request) {
-                   /* var token = request.getResponseHeader('AUTHORIZATION');
-                    $.ajax({
-                        type: "GET",
-                        url: "/main",
-                        beforeSend: function(request) {
-                            request.setRequestHeader("AUTHORIZATION", token);
-                        },
-                        success: function(response) {
-                            window.location.assign("/main");
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log("Error: " + textStatus + " " + errorThrown);
-                        }
-                    });*/
-                    console.log(data);
-                    localStorage.setItem("AUTHORIZATION","Bearer " + data);
-
-                    const token = localStorage.getItem('AUTHORIZATION');
-                    const headers = {
-                        'Authorization': token
-                    };
-                    const options = {
-                        method: 'GET',
-                        headers: headers
-                    };
-                    fetch('/main', options)
-                        .then(response => {
-                            if (response.ok) {
-                                window.location.href = '/main';
-                            } else {
-                                throw new Error('Network response was not ok.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('There was a problem with the network request:', error);
-                        });
+                    window.location.assign("/main");
                 },
                 error: function (data) {
-                    console.log(data);
                     $('#message').text(data.responseText);
                 }
             })
