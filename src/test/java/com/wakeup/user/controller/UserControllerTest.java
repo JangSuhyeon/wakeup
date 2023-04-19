@@ -3,7 +3,7 @@ package com.wakeup.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wakeup.exception.AppException;
 import com.wakeup.exception.ErrorCode;
-import com.wakeup.user.domain.UserLoginRequest;
+import com.wakeup.user.domain.dto.UserLoginRequest;
 import com.wakeup.user.domain.dto.UserJoinRequest;
 import com.wakeup.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;

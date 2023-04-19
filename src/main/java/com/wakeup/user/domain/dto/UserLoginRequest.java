@@ -1,4 +1,4 @@
-package com.wakeup.user.domain;
+package com.wakeup.user.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

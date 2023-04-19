@@ -1,19 +1,13 @@
 package com.wakeup.user.controller;
 
-import com.nimbusds.oauth2.sdk.http.HTTPResponse;
-import com.wakeup.user.domain.User;
-import com.wakeup.user.domain.UserLoginRequest;
+import com.wakeup.user.domain.dto.UserLoginRequest;
 import com.wakeup.user.domain.dto.UserJoinRequest;
 import com.wakeup.user.domain.dto.UserJoinResponse;
 import com.wakeup.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
