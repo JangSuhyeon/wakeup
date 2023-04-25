@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<!-- Content -->
+<div layout:fragment="content">
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>학생관리</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item active">학생관리</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">학생관리</h5>
+
+                            <!-- Table with stripped rows -->
+                            <table class="table table-hover table-striped" id="studentList">
+                                <thead>
+                                <tr>
+                                    <th scope="col">구분</th>
+                                    <th scope="col">이름</th>
+                                    <th scope="col">가입일</th>
+                                    <th scope="col">학교명</th>
+                                    <th scope="col">생년월일</th>
+                                    <th scope="col">성별</th>
+                                    <th scope="col">부모번호</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="student:${studentList}">
+                                    <td th:text="${student.stdGb}"></td>
+                                    <td><a href="#none" th:text="${student.stdNm}"></a></td>
+                                    <td th:text="${student.regDt}"></td>
+                                    <td th:text="${student.stdSchool}"></td>
+                                    <td th:text="${student.stdBthDt}"></td>
+                                    <td th:text="${student.stdGender}"></td>
+                                    <td th:text="${student.prtCelNo}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- End #main -->
+
+    <script>
+        $(function(){
+            $.ajax({
+                type:"POST",
+                url:"/student"
+            }).done(function (result) {
+                console.log(result);
+                $("#studentList").replaceWith(result);
+            })
+        });
+    </script>
+
+</div>
+</html>

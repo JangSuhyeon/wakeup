@@ -1,16 +1,14 @@
 package com.wakeup.user.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class User extends TimeEntity {
 
     @Id

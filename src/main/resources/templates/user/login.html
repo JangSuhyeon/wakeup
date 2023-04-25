@@ -128,7 +128,7 @@
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (data, textStatus, request) {
-                    window.location.assign("/main");
+                    window.location.assign("/");
                 },
                 error: function (data) {
                     $('#message').text(data.responseText);

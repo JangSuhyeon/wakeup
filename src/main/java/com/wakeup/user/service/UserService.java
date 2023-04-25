@@ -7,15 +7,10 @@ import com.wakeup.user.domain.User;
 import com.wakeup.user.domain.dto.UserJoinResponse;
 import com.wakeup.user.repository.UserRepository;
 import com.wakeup.utils.JwtTokenUtil;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
