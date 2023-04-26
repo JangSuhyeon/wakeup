@@ -3,13 +3,15 @@ package com.wakeup.student.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Data
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String stdSeq;
+    private Long stdId;
 
     @Column
     private String stdNm;
@@ -21,7 +23,7 @@ public class Student {
     private String stdSchool;
 
     @Column
-    private String regDt;
+    private Date regDt;
 
     @Column
     private String stdGb;
@@ -31,8 +33,5 @@ public class Student {
 
     @Column
     private String prtCelNo;
-
-    @Column
-    private String codeName;
 
 }

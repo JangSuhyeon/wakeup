@@ -1,10 +1,10 @@
 package com.wakeup.student.service;
 
+import com.wakeup.common.dto.Code;
 import com.wakeup.student.domain.Student;
 import com.wakeup.student.domain.dto.StudentResponse;
 import com.wakeup.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,18 +17,13 @@ public class StudentService {
 
     public List<StudentResponse> getStudentList() {
 
-        List<Student> studentList = studentRepository.findAll(PageRequest.of(0, 20)).getContent();;
+        List<StudentResponse> studentResponseList = studentRepository.findStudentList().stream().map(tuple -> {
+            Student student = tuple.get(0, Student.class);  // Student Table
+            Code stdGbCode = tuple.get(1, Code.class);      // Code Table - stdGb
+            Code stdGenderCode = tuple.get(2, Code.class);  // Code Table - stdGender
+            return new StudentResponse(student, stdGbCode, stdGenderCode);
+        }).collect(Collectors.toList());
 
-        return studentList.stream()
-                .map(student -> StudentResponse.builder()
-                        .stdSeq(student.getStdSeq())
-                        .stdNm(student.getStdNm())
-                        .stdBthDt(student.getStdBthDt())
-                        .stdSchool(student.getStdNm())
-                        .regDt(student.getRegDt())
-                        .stdGb(student.getStdGb())
-                        .stdGender(student.getStdGender())
-                        .prtCelNo(student.getPrtCelNo()).build())
-                .collect(Collectors.toList());
+        return studentResponseList;
     }
 }

@@ -1,17 +1,18 @@
 package com.wakeup.student.domain.dto;
 
+import com.wakeup.common.dto.Code;
+import com.wakeup.student.domain.Student;
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @AllArgsConstructor
-@Getter
 @Builder
-@ToString
+@Data
 public class StudentResponse {
-    private String stdSeq;
+    private Long stdId;
     private String stdNm;
     private String stdBthDt;
     private String stdSchool;
@@ -19,4 +20,20 @@ public class StudentResponse {
     private String stdGb;
     private String stdGender;
     private String prtCelNo;
+
+
+    public StudentResponse(Student student, Code stdGbCode, Code stdGenderCode) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        this.stdId = student.getStdId();
+        this.stdNm = student.getStdNm();
+        this.stdBthDt = student.getStdBthDt();
+        this.stdSchool = student.getStdSchool();
+        this.regDt = dateFormat.format(student.getRegDt());
+        this.stdGb = student.getStdGb();
+        this.stdGender = student.getStdGender();
+        this.prtCelNo = student.getPrtCelNo();
+        this.stdGb = stdGbCode.getCodeName();
+        this.stdGender = stdGenderCode.getCodeName();
+    }
 }
