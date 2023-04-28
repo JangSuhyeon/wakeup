@@ -5,8 +5,13 @@ import com.wakeup.student.domain.Student;
 import com.wakeup.student.domain.dto.StudentResponse;
 import com.wakeup.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.query.JpaTuple;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +20,20 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final StudentRepository studentRepository;
 
-    public List<StudentResponse> getStudentList() {
+    public Page<StudentResponse> getStudentList(Pageable pageable) {
 
-        List<StudentResponse> studentResponseList = studentRepository.findStudentList().stream().map(tuple -> {
-            Student student = tuple.get(0, Student.class);  // Student Table
-            Code stdGbCode = tuple.get(1, Code.class);      // Code Table - stdGb
-            Code stdGenderCode = tuple.get(2, Code.class);  // Code Table - stdGender
-            return new StudentResponse(student, stdGbCode, stdGenderCode);
-        }).collect(Collectors.toList());
+        Page<JpaTuple> studentTuples = studentRepository.findStudentList(pageable);
+        List<StudentResponse> studentList = new ArrayList<>();
 
-        return studentResponseList;
+        for (JpaTuple tuple : studentTuples) {
+            Student student = tuple.get(0, Student.class);
+            Code stdGb = tuple.get(1, Code.class);
+            Code stdGender = tuple.get(2, Code.class);
+
+            StudentResponse studentResponse = new StudentResponse(student, stdGb, stdGender);
+            studentList.add(studentResponse);
+        }
+
+        return new PageImpl<>(studentList, pageable, studentTuples.getTotalElements());
     }
 }

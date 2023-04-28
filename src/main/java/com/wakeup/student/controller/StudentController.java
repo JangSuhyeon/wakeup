@@ -4,6 +4,8 @@ import com.wakeup.student.domain.Student;
 import com.wakeup.student.domain.dto.StudentResponse;
 import com.wakeup.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,10 +31,10 @@ public class StudentController {
     }
 
     @PostMapping("")
-    public String listJson(Model model) {
+    public String listJson(Model model, @PageableDefault(page = 0, size = 15, sort = "regDt", direction = Sort.Direction.DESC) Pageable pageable) {
+
         // 학생 목록 데이터를 가져오는 로직
-        List<StudentResponse> studentList = studentService.getStudentList();
-        System.out.println("studentList : " + studentList);
+        Page<StudentResponse> studentList = studentService.getStudentList(pageable);
 
         // 학생 목록 데이터를 모델에 담아서 Thymeleaf 템플릿에 전달
         model.addAttribute("studentList", studentList);
