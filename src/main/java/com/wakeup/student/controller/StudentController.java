@@ -26,21 +26,17 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping("")
-    public String list() {
-        return "/student/list";
-    }
-
-    @PostMapping("")
     public String listJson(Model model, @PageableDefault(page = 0, size = 15, sort = "regDt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         // 학생 목록 데이터를 가져오는 로직
         Page<StudentResponse> studentList = studentService.getStudentList(pageable);
+        System.out.println(studentList.getPageable().first());
 
         // 학생 목록 데이터를 모델에 담아서 Thymeleaf 템플릿에 전달
         model.addAttribute("studentList", studentList);
 
         // 학생 목록 데이터를 포함한 Thymeleaf 템플릿 파일의 경로를 반환
-        return "/student/list :: #studentList";
+        return "/student/list";
     }
 
     @PostMapping("/regist")
