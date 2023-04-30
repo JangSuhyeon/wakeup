@@ -63,16 +63,16 @@
                                 tempEndPage = ${startPage + pageSize - 1},
                                 endPage = (${tempEndPage > totalPages ? totalPages : tempEndPage})">
                                 <ul class="pagination">
-                                    <li th:classappend="${studentList.pageable.first} ? 'disabled'" class="page-item">
-                                        <a class="page-link" th:href="${studentList.pageable.first} ? '#' : @{/student(page=${#numbers.formatDecimal(startPage - pageSize, 0, -1)})}" aria-label="Previous">
+                                    <li th:classappend="${pageNumber == 1 ? 'disabled' : ''}" class="page-item">
+                                        <a class="page-link" th:href="${pageNumber == 1} ? '#' : @{/student(page=${pageNumber - 1})}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
-                                    <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                                    <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber} ? 'active'" class="page-item">
                                         <a th:text="${page}" class="page-link" th:href="@{/student(page=${page})}"></a>
                                     </li>
-                                    <li th:classappend="${studentList.pageable.next} ? 'disabled'" class="page-item">
-                                        <a class="page-link" th:href="${studentList.pageable.next} ? '#' : @{/student(page=${#numbers.formatDecimal(startPage + pageSize, 0, -1)})}" aria-label="Next">
+                                    <li th:classappend="${pageNumber == endPage} ? 'disabled'" class="page-item">
+                                        <a class="page-link" th:href="${pageNumber == endPage} ? '#' : @{/student(page=${pageNumber + 1})}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
