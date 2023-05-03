@@ -36,4 +36,14 @@ public class StudentService {
 
         return new PageImpl<>(studentList, pageable, studentTuples.getTotalElements());
     }
+
+    public StudentResponse findByStdCd(String stdId) {
+
+        JpaTuple tuple = studentRepository.findByStdCd(stdId);
+        Student student = tuple.get(0, Student.class);
+        Code stdGb = tuple.get(1, Code.class);
+        Code stdGender = tuple.get(2, Code.class);
+
+        return new StudentResponse(student, stdGb, stdGender);
+    }
 }

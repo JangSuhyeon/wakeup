@@ -46,6 +46,9 @@ h6 {
   padding: 20px 30px;
   transition: all 0.3s;
 }
+#main.popup-main {
+  margin-top:20px;
+}
 
 @media (max-width: 1199px) {
   #main {
@@ -634,6 +637,10 @@ h6 {
   #main,
   #footer {
     margin-left: 300px;
+  }
+
+  #main.popup-main {
+    margin-left:0;
   }
 }
 
@@ -1230,4 +1237,15 @@ h6 {
   text-align: center;
   font-size: 13px;
   color: #012970;
+}
+
+
+
+/*suhyeon*/
+.profile {
+  padding-top:20px;
+}
+.profile > img {
+  width: 100%;
+  height:auto;
 }
