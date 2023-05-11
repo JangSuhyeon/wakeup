@@ -25,7 +25,10 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">학생관리</h5>
+                            <div class="row">
+                                <div class="col-6"><h5 class="card-title">학생관리</h5></div>
+                                <div class="col-6"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">신규 학생 등록</button></div>
+                            </div>
 
                             <!-- Table with stripped rows -->
                             <table class="table table-hover table-striped" id="studentList">
@@ -88,6 +91,77 @@
 
     </main>
     <!-- End #main -->
+
+    // 신규 학생 등록 모달
+    <div class="modal fade" id="verticalycentered" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">신규 학생 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">학생코드</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">생년월일</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">학교</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        /*$(function () {
+            // 신규 학생 등록 버튼 클릭 시
+            $('.new-std-btn').click(function () {
+                $('.new-std-modal').css('display','block');
+            });
+        })*/
+    </script>
 
 </div>
 </html>

@@ -236,6 +236,7 @@ h6 {
 }
 
 .card-title {
+  display: inline-block;
   padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
@@ -1248,4 +1249,8 @@ h6 {
 .profile > img {
   width: 100%;
   height:auto;
+}
+.new-std-btn {
+  float:right;
+  margin: 20px 0 15px 0;
 }
