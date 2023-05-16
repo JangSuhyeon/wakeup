@@ -2,16 +2,15 @@ package com.wakeup.student.domain.dto;
 
 import com.wakeup.common.dto.Code;
 import com.wakeup.student.domain.Student;
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
-public class StudentResponse {
+public class StudentDto {
     private Long stdId;
     private String stdNm;
     private String stdBthDt;
@@ -22,7 +21,7 @@ public class StudentResponse {
     private String prtCelNo;
 
 
-    public StudentResponse(Student student, Code stdGbCode, Code stdGenderCode) {
+    public StudentDto(Student student, Code stdGbCode, Code stdGenderCode) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         this.stdId = student.getStdId();

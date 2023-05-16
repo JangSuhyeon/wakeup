@@ -101,66 +101,73 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form th:id="student-save-form">
                         <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">이름</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="inputText" class="col-sm-2 col-form-label">학생코드</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control">
+                                <input type="text" id="stdNm" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">생년월일</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control">
+                                <input type="text" id="stdBthDt" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">학교</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control">
+                                <input type="text" id="stdSchool" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="inputText" class="col-sm-2 col-form-label"></label>
+                            <label for="inputText" class="col-sm-2 col-form-label">성별</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control">
+                                <input type="text" id="stdGender" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="inputText" class="col-sm-2 col-form-label">이름</label>
+                            <label for="inputText" class="col-sm-2 col-form-label">학부모 휴대폰번호</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="inputText" class="col-sm-2 col-form-label">이름</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control">
+                                <input type="text" id="prtCelNo" class="form-control">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" th:id="student-save-btn">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript">
-        /*$(function () {
-            // 신규 학생 등록 버튼 클릭 시
-            $('.new-std-btn').click(function () {
-                $('.new-std-modal').css('display','block');
+        $(function () {
+            // 신규 학생 등록 모달 저장 버튼 클릭 시
+            $('#student-save-btn').click(function () {
+
+                var newStudent = {
+                    'stdNm' : $('#stdNm').val(),
+                    'stdBthDt' : $('#stdBthDt').val(),
+                    'stdSchool' : $('#stdSchool').val(),
+                    'stdGender' : $('#stdGender').val(),
+                    'prtCelNo' : $('#prtCelNo').val()
+                }
+
+                $.ajax({
+                    type:'POST',
+                    url:'/student',
+                    contentType:'application/json',
+                    data:JSON.stringify(newStudent),
+                    dataType:'json',
+                    success:function (data) {
+                        console.log("성공");
+                        console.log(data.data);
+                    }
+                })
             });
-        })*/
+        })
     </script>
 
 </div>

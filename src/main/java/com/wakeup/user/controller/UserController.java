@@ -37,8 +37,8 @@ public class UserController {
         token = "Bearer " + token;
         token = UriUtils.encode(token, StandardCharsets.UTF_8);
         Cookie cookie = new Cookie("token", token);
-        cookie.setMaxAge(60 * 60 * 24); // 쿠키의 유효기간을 설정합니다. 이 예시에서는 1일로 설정합니다.
-        cookie.setPath("/"); // 쿠키가 사용될 경로를 설정합니다. 이 예시에서는 모든 경로에서 사용됩니다.
+        cookie.setMaxAge(60 * 60 * 24); // 쿠키 유효기간 1일 (토큰 유효기간과 맞춰야 함)
+        cookie.setPath("/"); // 쿠키가 사용될 경로
         response.addCookie(cookie);
 
         log.info("userName : {} -> 로그인",dto.getUserName());

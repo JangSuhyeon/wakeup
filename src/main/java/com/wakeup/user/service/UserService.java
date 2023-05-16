@@ -39,7 +39,6 @@ public class UserService {
                 .email(email)
                 .role(Role.USER)
                 .build();
-
         userRepository.save(user);
 
         return UserJoinResponse.builder()
