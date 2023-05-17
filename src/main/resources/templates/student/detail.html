@@ -13,8 +13,9 @@
         </div><!-- End Page Title -->
 
         <section class="section">
+            <!--기본정보-->
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
 
                     <div class="card">
                         <div class="card-body profile">
@@ -22,50 +23,50 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-8">
 
                     <div class="card">
                         <div class="card-body">
                             <!-- General Form Elements -->
                             <form>
                                 <div class="row mb-3 mt-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">이름</label>
+                                    <label class="col-sm-2 col-form-label">이름</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.stdNm}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail" class="col-sm-2 col-form-label">학생코드</label>
+                                    <label class="col-sm-2 col-form-label">학생코드</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.stdId}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">생년월일</label>
+                                    <label class="col-sm-2 col-form-label">생년월일</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.stdBthDt}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputNumber" class="col-sm-2 col-form-label">학교</label>
+                                    <label class="col-sm-2 col-form-label">학교</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.stdSchool}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputNumber" class="col-sm-2 col-form-label">등록구분</label>
+                                    <label class="col-sm-2 col-form-label">등록구분</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.stdGb}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputNumber" class="col-sm-2 col-form-label">성별</label>
+                                    <label class="col-sm-2 col-form-label">성별</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.stdGender}">
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="inputNumber" class="col-sm-2 col-form-label">학부모 전화번호</label>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">학부모 전화번호</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" th:value="${student.prtCelNo}">
                                     </div>
@@ -76,6 +77,97 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <!--학급정보-->
+            <div class="row">
+                <div class="card pt-2">
+                    <div class="card-body pt-4">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">학급정보</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-4" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <table class="table table-bordered">
+                                    <thead class="align-items-center">
+                                    <tr>
+                                        <th scope="col">편성년월</th>
+                                        <th scope="col">학급명</th>
+                                        <th scope="col">교사</th>
+                                        <th scope="col">수강상태</th>
+                                        <th scope="col">수납상태</th>
+                                        <th scope="col">처리</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Brandon Jacob</td>
+                                        <td>Designer</td>
+                                        <td>28</td>
+                                        <td>2016-05-25</td>
+                                        <td>2016-05-25</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Brandon Jacob</td>
+                                        <td>Designer</td>
+                                        <td>28</td>
+                                        <td>2016-05-25</td>
+                                        <td>2016-05-25</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Brandon Jacob</td>
+                                        <td>Designer</td>
+                                        <td>28</td>
+                                        <td>2016-05-25</td>
+                                        <td>2016-05-25</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Brandon Jacob</td>
+                                        <td>Designer</td>
+                                        <td>28</td>
+                                        <td>2016-05-25</td>
+                                        <td>2016-05-25</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Brandon Jacob</td>
+                                        <td>Designer</td>
+                                        <td>28</td>
+                                        <td>2016-05-25</td>
+                                        <td>2016-05-25</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Brandon Jacob</td>
+                                        <td>Designer</td>
+                                        <td>28</td>
+                                        <td>2016-05-25</td>
+                                        <td>2016-05-25</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -4,13 +4,18 @@ import com.wakeup.exception.AppException;
 import com.wakeup.exception.ErrorCode;
 import com.wakeup.user.domain.Role;
 import com.wakeup.user.domain.User;
+import com.wakeup.user.domain.dto.TokenLoginRequest;
+import com.wakeup.user.domain.dto.TokenLoginResponse;
 import com.wakeup.user.domain.dto.UserJoinResponse;
+import com.wakeup.user.repository.TokenRepository;
 import com.wakeup.user.repository.UserRepository;
 import com.wakeup.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +24,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
+    private final TokenRepository tokenRepository;
+
     @Value("${jwt.token.secret}")
     private String key;
-    private long expireTimeMs = 1000 * 60 * 60l;
 
     public UserJoinResponse join(String userName, String password, String name, String email){
 
@@ -60,8 +66,11 @@ public class UserService {
         }
 
         // 로그인 성공
-        String token = JwtTokenUtil.createToken(userName, key, expireTimeMs);
+        TokenLoginResponse tokenRes = JwtTokenUtil.createToken(new TokenLoginRequest(userName, key));
 
-        return token;
+        // RefreshToken 저장
+        tokenRepository.save(tokenRes.toEntity(tokenRes.getUserName(), tokenRes.getRefreshToken(), tokenRes.getExpireTime()));
+
+        return tokenRes.getAccessToken();
     }
 }

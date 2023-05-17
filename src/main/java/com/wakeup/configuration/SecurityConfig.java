@@ -1,6 +1,7 @@
 package com.wakeup.configuration;
 
 import com.wakeup.oauth2.CustomOAuth2UserService;
+import com.wakeup.user.repository.TokenRepository;
 import com.wakeup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final UserService userService;
+
+    private final TokenRepository tokenRepository;
 
     @Value("${jwt.token.secret}")
     private String secretKey;
@@ -53,7 +56,7 @@ public class SecurityConfig {
         httpSecurity.logout()
                 .deleteCookies("token");
 
-        return httpSecurity.addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+        return httpSecurity.addFilterBefore(new JwtFilter(tokenRepository, userService, secretKey), UsernamePasswordAuthenticationFilter.class)
             .build();
     }
 

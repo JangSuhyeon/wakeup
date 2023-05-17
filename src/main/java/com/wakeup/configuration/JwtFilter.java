@@ -1,7 +1,15 @@
 package com.wakeup.configuration;
 
+import com.wakeup.user.domain.dto.TokenLoginRequest;
+import com.wakeup.user.domain.dto.TokenLoginResponse;
+import com.wakeup.user.repository.TokenRepository;
+import com.wakeup.user.repository.UserRepository;
 import com.wakeup.user.service.UserService;
 import com.wakeup.utils.JwtTokenUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -25,6 +33,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
+
+    private final TokenRepository tokenRepository;
 
     private final UserService userService;
     private final String secretKey;
@@ -53,7 +63,18 @@ public class JwtFilter extends OncePerRequestFilter {
         // Token 꺼내기
         String token = authentication.split(" ")[1];
 
-        // Token Expried 여부
+        // JWT Expired 여부
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        String userName = claims.get("userName", String.class);
+
+        Boolean refreshTokenCheck = tokenRepository.findByUserName(userName);
+        if(refreshTokenCheck){
+            TokenLoginResponse tokenLoginResponse = JwtTokenUtil.createToken(new TokenLoginRequest(userName, secretKey));
+            String newToken = tokenLoginResponse.getAccessToken();
+            System.out.println("새로운 토큰 발급 : " + newToken);
+        }
+
+        // Token Expired 여부
         if(JwtTokenUtil.isExpired(token, secretKey)){
             log.error("Token이 만료 되었습니다.");
             filterChain.doFilter(request, response);
@@ -61,7 +82,7 @@ public class JwtFilter extends OncePerRequestFilter {
         };
 
         // UserName Token에서 꺼내기
-        String userName = JwtTokenUtil.getUserName(token,secretKey);
+//        String userName = JwtTokenUtil.getUserName(token,secretKey);
 
         // 권한부여
         UsernamePasswordAuthenticationToken authenticationToken =
