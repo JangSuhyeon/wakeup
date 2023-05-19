@@ -37,7 +37,7 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
 
-        return new TokenLoginResponse(userName, accessToken, refreshToken, refreshExpireTimeMs);
+        return new TokenLoginResponse(userName, accessToken, refreshToken, new Date(System.currentTimeMillis() + refreshExpireTimeMs));
     }
 
     public static boolean isExpired(String token, String secretKey) {

@@ -67,8 +67,8 @@ public class JwtFilter extends OncePerRequestFilter {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         String userName = claims.get("userName", String.class);
 
-        Boolean refreshTokenCheck = tokenRepository.findByUserName(userName);
-        if(refreshTokenCheck){
+        int refreshTokenCheck = tokenRepository.countAllByUserName(userName);
+        if(refreshTokenCheck == 0){
             TokenLoginResponse tokenLoginResponse = JwtTokenUtil.createToken(new TokenLoginRequest(userName, secretKey));
             String newToken = tokenLoginResponse.getAccessToken();
             System.out.println("새로운 토큰 발급 : " + newToken);

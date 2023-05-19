@@ -7,17 +7,23 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link collapsed" href="index.html">
                     <i class="bi bi-grid"></i>
                     <span>대시보드</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li>
 
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/student}">
+                <a class="nav-link collapsed" th:href="@{/student}">
                     <i class="bi bi-people"></i><span>학생관리</span>
                 </a>
-            </li><!-- End Components Nav -->
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/class}">
+                    <i class="bi bi-bank"></i><span>학급관리</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
