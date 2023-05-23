@@ -10,11 +10,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>학급관리</h1>
+            <h1>수강관리</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item active">학급관리</li>
+                    <li class="breadcrumb-item active">수강관리</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -26,25 +26,25 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-6"><h5 class="card-title">학급관리</h5></div>
-                                <div class="col-6"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">신규 학급 등록</button></div>
+                                <div class="col-6"><h5 class="card-title">수강관리</h5></div>
+                                <div class="col-6"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">신규 수강 등록</button></div>
                             </div>
 
                             <!-- Table with stripped rows -->
                             <table class="table table-hover table-striped" id="studentList">
                                 <thead>
                                 <tr>
+                                    <th scope="col">학생</th>
                                     <th scope="col">편성년월</th>
                                     <th scope="col">학급명</th>
-                                    <th scope="col">담당선생님</th>
+                                    <th scope="col">수강상태</th>
+                                    <th scope="col">수납상태</th>
+                                    <th scope="col">수강료</th>
+                                    <th scope="col">수납금액</th>
+                                    <th scope="col">환불금액</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="classGroup : ${classGroupList}">
-                                    <td th:text="${classGroup.clsYm}"></td>
-                                    <td th:text="${classGroup.clsNm}"></td>
-                                    <td th:text="${classGroup.empId}"></td>
-                                </tr>
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
